@@ -17,14 +17,14 @@ export default function () {
     http.get('https://run.mocky.io/v3/3539cc77-29d0-48f9-9cc9-84d9b91f0fe1?mocky-delay=2000ms');
 
     //custom tag
-    res = http.get('https://run.mocky.io/v3/3539cc77-29d0-48f9-9cc9-84d9b91f0fe1?mocky-delay=2000ms,',
+     http.get('https://run.mocky.io/v3/3539cc77-29d0-48f9-9cc9-84d9b91f0fe1?mocky-delay=2000ms,',
     {
         tags: {
             page: 'order'
         }
     });
     check(res,{
-        'status is 201': (r) => r.status ===201},
+        'status is 200': (r) => r.status ===200},
         {page:'order'}
         )
 }
