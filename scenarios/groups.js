@@ -6,6 +6,11 @@ import { check, group, sleep } from 'k6';
 export const options = {
     thresholds: {
         http_req_duration: ['p(95)<1000'],
+        'http_req_duration{expected_response:true}': ['p(95)<1000'],
+        group_duration: ['p(95)<1000'],
+        'group_duration{group:::Main page}': ['p(95)<1000'], //wil return a sum of all requets in the group/sub group
+        'group_duration{group:::News page}': ['p(95)<1000'],
+        'group_duration{group:::Main page::Assets}': ['p(95)<1000'],
     }
 }
 
@@ -26,18 +31,14 @@ export default function () {
 
 
     group("News page", function () {
-        res = http.get("https://test-api.k6.io/public/crocodiles/");
+       let res2 = http.get("https://test-api.k6.io/public/crocodiles/");
+       let res500 = http.get("https://run.mocky.io/v3/0324ebeb-c806-4b68-b154-f9240f1a085a/");
 
-        check(res, {
+        check(res2, {
             'status is 200': (r) => r.status === 200
         },
         )
 
     });
 
-
-
-
-
-    sleep(1);
 }
